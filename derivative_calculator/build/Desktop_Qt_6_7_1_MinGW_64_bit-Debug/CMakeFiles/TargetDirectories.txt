@@ -1,0 +1,9 @@
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/derivative_calculator.dir
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/install.dir
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/derivative_calculator_autogen_timestamp_deps.dir
+C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Debug/CMakeFiles/derivative_calculator_autogen.dir
