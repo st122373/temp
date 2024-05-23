@@ -1,5 +1,10 @@
 #include "form.h"
-#include "differentiation.h"
+#include "monome.h"
+#include "constant.h"
+#include "x.h"
+#include "sinus.h"
+#include "cosinus.h"
+#include "exp.h"
 
 Form::Form(QWidget *parent)
     : QWidget(parent)
@@ -233,7 +238,19 @@ QString Form::computeDerivative(const QStringList &arguments)
 
 QString Form::computeSimpleDerivative(const QString &func)
 {
-    // Реализуйте вычисление элементарных производных, аналогично C# версии
+    if (Constant::IsIt(func)) {
+        return Constant::Diff(func);
+    } else if (X::IsIt(func)) {
+        return X::Diff(func);
+    } else if (Monome::IsIt(func)) {
+        return Monome::Diff(func);
+    } else if (Sinus::IsIt(func)) {
+        return Sinus::Diff(func);
+    } else if (Cosinus::IsIt(func)) {
+        return Cosinus::Diff(func);
+    } else if (Exp::IsIt(func)) {
+        return Exp::Diff(func);
+    }
 
-    return Diff(func);
+    return "Unsupported function";
 }

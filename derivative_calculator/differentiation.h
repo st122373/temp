@@ -1,6 +1,7 @@
 #ifndef DIFFERENTIATION_H
 #define DIFFERENTIATION_H
 
+
 #include <QString>
 #include <QMap>
 
