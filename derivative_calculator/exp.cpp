@@ -1,13 +1,13 @@
-#ifndef EXP_H
-#define EXP_H
+#include "exp.h"
 
 #include <QString>
 
-class Exp
+bool Exp::IsIt(const QString &func)
 {
-public:
-    static bool IsIt(const QString &func);
-    static QString Diff(const QString &func);
-};
+    return (func == "exp");
+}
 
-#endif // EXP_H
+QString Exp::Diff(const QString &func)
+{
+    return "exp";
+}

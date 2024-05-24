@@ -6,8 +6,7 @@
 #include "cosinus.h"
 #include "exp.h"
 
-Form::Form(QWidget *parent)
-    : QWidget(parent)
+Form::Form(QWidget *parent): QWidget(parent)
 {
     functionTextBox = new QLineEdit(this);
     resultTextBox = new QTextEdit(this);

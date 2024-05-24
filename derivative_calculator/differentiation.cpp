@@ -29,10 +29,10 @@ QString Diff(const QString &func)
     {
         result = Cosinus::Diff(func);
     }
-    //else if (Exp::IsIt(func))
-    //{
-    //    result = Exp::Diff(func);
-    //}
+    else if (Exp::IsIt(func))
+    {
+        result = Exp::Diff(func);
+    }
 
     return result;
 }
