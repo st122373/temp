@@ -1,6 +1,39 @@
-#include "monome.h"
+#include "common_funcction.h"
 #include <QRegularExpression>
 
+//constant
+bool Constant::IsIt(const QString &func)
+{
+    bool ok;
+    func.toDouble(&ok);
+    return ok;
+}
+
+QString Constant::Diff(const QString &func)
+{
+    return "0";
+}
+//cosinus
+bool Cosinus::IsIt(const QString &func)
+{
+    return (func == "cos");
+}
+
+QString Cosinus::Diff(const QString &func)
+{
+    return "-sin";
+}
+//exp
+bool Exp::IsIt(const QString &func)
+{
+    return (func == "exp");
+}
+
+QString Exp::Diff(const QString &func)
+{
+    return "exp";
+}
+//monome
 bool Monome::IsIt(const QString &func)
 {
     // Проверка, является ли строка мономом вида ax^b, где a и b - числа
@@ -45,4 +78,24 @@ QString Monome::Diff(const QString &func)
     {
         return QString::number(newA) + "x^" + QString::number(newB);
     }
+}
+//sinus
+bool Sinus::IsIt(const QString &func)
+{
+    return (func == "sin");
+}
+
+QString Sinus::Diff(const QString &func)
+{
+    return "cos";
+}
+//x
+bool X::IsIt(const QString &func)
+{
+    return (func == "x");
+}
+
+QString X::Diff(const QString &func)
+{
+    return "1";
 }

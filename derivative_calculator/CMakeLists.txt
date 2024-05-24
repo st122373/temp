@@ -25,20 +25,22 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         form.h
         differentiation.h
-        constant.h
-        x.h
-        sinus.h
-        cosinus.h
-        monome.h
-        exp.h
-        constant.cpp
-        cosinus.cpp
+
+
+
+
+
+
+
+
         differentiation.cpp
-        exp.cpp
-        monome.cpp
-        sinus.cpp
-        x.cpp
+
+
+
+
         form.cpp
+        common_funcction.h
+        common_function.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET derivative_calculator APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

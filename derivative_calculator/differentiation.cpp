@@ -1,10 +1,5 @@
 #include "differentiation.h"
-#include "monome.h"
-#include "constant.h"
-#include "x.h"
-#include "sinus.h"
-#include "cosinus.h"
-#include "exp.h"
+#include "common_funcction.h"
 
 QString Diff(const QString &func)
 {
