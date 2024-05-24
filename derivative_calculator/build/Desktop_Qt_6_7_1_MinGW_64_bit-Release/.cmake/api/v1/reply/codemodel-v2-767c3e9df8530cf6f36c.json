@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-cd117a00faf03604f409.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "derivative_calculator",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "derivative_calculator::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-derivative_calculator-Release-bd115a3d7514b0a207e8.json",
+					"name" : "derivative_calculator",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "derivative_calculator_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-derivative_calculator_autogen-Release-53f031864e14cfeab3f7.json",
+					"name" : "derivative_calculator_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "derivative_calculator_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-derivative_calculator_autogen_timestamp_deps-Release-c00fa5a8a6c43b8a96ed.json",
+					"name" : "derivative_calculator_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/chern/Documents/temp/derivative_calculator/build/Desktop_Qt_6_7_1_MinGW_64_bit-Release",
+		"source" : "C:/Users/chern/Documents/temp/derivative_calculator"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

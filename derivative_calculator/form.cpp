@@ -25,8 +25,11 @@ Form::Form(QWidget *parent): QWidget(parent)
 void Form::onCalculateClicked()
 {
     QString func = functionTextBox->text();
+    qDebug() << "Input function:" << func;
     QStringList arguments = parseExpression(func);
+    qDebug() << "Parsed expression:" << arguments; // Отладочное сообщение
     QString derivative = computeDerivative(arguments);
+    qDebug() << "Computed derivative:" << derivative; // Отладочное сообщение
 
     resultTextBox->setText(arguments.join(", "));
     diffTextBox->setText(derivative);
@@ -36,6 +39,7 @@ QStringList Form::parseExpression(const QString &expression)
 {
     QStringList arguments;
     QString sourceExpression = expression.simplified().replace(" ", "");
+    qDebug() << "Parsing expression:" << sourceExpression;
 
     int symbolNumber = 0;
     QString operand1 = "";
@@ -159,16 +163,21 @@ QStringList Form::parseExpression(const QString &expression)
         }
     }
 
+    qDebug() << "Parsed arguments:" << arguments;
     return arguments;
 }
 
 QString Form::computeDerivative(const QStringList &arguments)
 {
+    qDebug() << "Computing derivative for arguments:" << arguments;
     QStringList localArguments = arguments;
+    qDebug() << "Initial localArguments:" << localArguments;
+
     QStringList operations = { "(", "+", "-", "*", "/", "^", ")", "(", "()" };
 
     while (localArguments.size() > 1)
     {
+        qDebug() << "Entering while loop with localArguments:" << localArguments;
         QString firstOper = "";
         int firstOperIndex = localArguments.size();
         for (const QString &str : operations)
@@ -227,37 +236,48 @@ QString Form::computeDerivative(const QStringList &arguments)
         }
     }
 
-    return localArguments.first();
+    qDebug() << "Final localArguments:" << localArguments;
+
+    return localArguments.isEmpty() ? "Error computing derivative" : diffsList.value(localArguments.first(), "Error computing derivative");
 }
+
 
 QString Form::computeSimpleDerivative(const QString &func)
 {
+    qDebug() << "Computing derivative for:" << func; // Отладочное сообщение
     if (Constant::IsIt(func))
     {
+        qDebug() << "Identified as Constant";
         return Constant::Diff(func);
     }
     else if (X::IsIt(func))
     {
+        qDebug() << "Identified as variable x";
         return X::Diff(func);
     }
     else if (Monome::IsIt(func))
     {
+        qDebug() << "Identified as Monome";
         return Monome::Diff(func);
     }
     else if (Sinus::IsIt(func))
     {
+        qDebug() << "Identified as Sinus";
         return Sinus::Diff(func);
     }
     else if (Cosinus::IsIt(func))
     {
+        qDebug() << "Identified as Cosinus";
         return Cosinus::Diff(func);
     }
     else if (Exp::IsIt(func))
     {
+        qDebug() << "Identified as Exp";
         return Exp::Diff(func);
     }
-    else{
+    else
+    {
+        qDebug() << "Unsupported function";
         return "Unsupported function";
-
     }
 }
