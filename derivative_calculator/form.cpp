@@ -175,25 +175,33 @@ QString Form::computeDerivative(const QStringList &arguments)
 
     QStringList operations = { "(", "+", "-", "*", "/", "^", ")", "(", "()" };
 
-    while (localArguments.size() > 1)
+    while (localArguments.size() > 0)
     {
         qDebug() << "Entering while loop with localArguments:" << localArguments;
         QString firstOper = "";
         int firstOperIndex = localArguments.size();
-        for (const QString &str : operations)
+        qDebug() << "firstOperIndex = " << firstOperIndex;
+        for (int i = 0; i < operations.size(); ++i)
         {
+            QString str = operations[i];
             int index = localArguments.indexOf(str);
-            if (index > 0 && index < firstOperIndex)
+            qDebug() << "Checking operation:" << str << "Index found:" << index;
+
+            if (index >= 0 && index < firstOperIndex)
             {
-                firstOperIndex = index;
+                firstOperIndex = i;
                 firstOper = str;
             }
         }
+        qDebug() << "firstOperIndex" << firstOperIndex;
+        qDebug() << "firstOper" << firstOper;
+        qDebug() << "End of for loop";
 
         QString f1, f2, df1, df2, oper, expression, diff;
 
         if (firstOper == "()")
         {
+            qDebug() << "if is ()";
             localArguments.removeAt(firstOperIndex);
             int ComposeIndex = localArguments.lastIndexOf("Compose", firstOperIndex);
             if (ComposeIndex > 0)
@@ -217,17 +225,26 @@ QString Form::computeDerivative(const QStringList &arguments)
         }
         else
         {
+            qDebug() << "if is not ()";
             f1 = localArguments[firstOperIndex - 2];
+            qDebug() << "f1 = " << f1;
             df1 = computeSimpleDerivative(f1);
+            qDebug() << "df1 = " << df1;
             f2 = localArguments[firstOperIndex - 1];
+            qDebug() << "f2 = " << f2;
             df2 = computeSimpleDerivative(f2);
+            qDebug() << "df2 = " << df2;
             oper = localArguments[firstOperIndex];
+            qDebug() << "oper = " << oper;
             expression = f1 + oper + f2;
+            qDebug() << "expression = " << expression;
             diff = computeSimpleDerivative(f1 + oper + f2);
+            qDebug() << "dif = " << diff;
 
             localArguments.removeAt(firstOperIndex);
             localArguments.removeAt(firstOperIndex - 1);
             localArguments[firstOperIndex - 2] = expression;
+            qDebug() << "if is not () end";
         }
 
         if (!diffsList.contains(expression))
