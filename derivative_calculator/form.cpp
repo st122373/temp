@@ -1,5 +1,6 @@
 #include "form.h"
 #include "common_funcction.h"
+#include "differentiation.h"
 
 Form::Form(QWidget *parent): QWidget(parent)
 {
@@ -173,7 +174,7 @@ QString Form::computeDerivative(const QStringList &arguments)
     QStringList localArguments = arguments;
     qDebug() << "Initial localArguments:" << localArguments;
 
-    QStringList operations = { "(", "+", "-", "*", "/", "^", ")", "(", "()" };
+    QStringList operations = { "+", "-", "*", "/", "^" };
 
     while (localArguments.size() > 0)
     {
@@ -181,6 +182,7 @@ QString Form::computeDerivative(const QStringList &arguments)
         QString firstOper = "";
         int firstOperIndex = localArguments.size();
         qDebug() << "firstOperIndex = " << firstOperIndex;
+
         for (int i = 0; i < operations.size(); ++i)
         {
             QString str = operations[i];
@@ -189,7 +191,7 @@ QString Form::computeDerivative(const QStringList &arguments)
 
             if (index >= 0 && index < firstOperIndex)
             {
-                firstOperIndex = i;
+                firstOperIndex = index;
                 firstOper = str;
             }
         }
@@ -199,65 +201,87 @@ QString Form::computeDerivative(const QStringList &arguments)
 
         QString f1, f2, df1, df2, oper, expression, diff;
 
-        if (firstOper == "()")
-        {
-            qDebug() << "if is ()";
-            localArguments.removeAt(firstOperIndex);
-            int ComposeIndex = localArguments.lastIndexOf("Compose", firstOperIndex);
-            if (ComposeIndex > 0)
-            {
-                f1 = localArguments[ComposeIndex - 1];
-                df1 = computeSimpleDerivative(f1);
-                f2 = localArguments[ComposeIndex + 1];
-                df2 = computeSimpleDerivative(f2);
-                oper = "Compose";
-                expression = f1 + "(" + f2 + ")";
-                diff = computeSimpleDerivative(f1 + "(" + f2 + ")");
+        // Проверка границ
+        if (firstOperIndex - 1 < 0 || firstOperIndex >= localArguments.size()) {
+            return "Error: Invalid expression";
+        }
 
-                localArguments.removeAt(ComposeIndex + 1);
-                localArguments.removeAt(ComposeIndex);
-                localArguments[ComposeIndex - 1] = expression;
+        f1 = localArguments[firstOperIndex - 2];
+        f2 = localArguments[firstOperIndex - 1];
+        oper = localArguments[firstOperIndex];
+
+        qDebug() << "f1 = " << f1;
+        df1 = computeSimpleDerivative(f1);
+        qDebug() << "df1 = " << df1;
+        qDebug() << "f2 = " << f2;
+        df2 = computeSimpleDerivative(f2);
+        qDebug() << "df2 = " << df2;
+        qDebug() << "oper = " << oper;
+
+        // Обработка операций
+        if (oper == "+")
+        {
+            expression = f1 + "+" + f2;
+            diff = SimplifyAdd(df1, df2, true);
+            qDebug() << "Operator + defined";
+            return diff;
+        }
+        else if (oper == "-")
+        {
+            expression = f1 + "-" + f2;
+            diff = SimplifyAdd(df1, df2, false);
+            qDebug() << "Operator - defined";
+            return diff;
+        }
+        else if (oper == "*")
+        {
+            expression = f1 + "*" + f2;
+            diff = SimplifyAdd(SimplifyMult(df1, f2), SimplifyMult(f1, df2), true);
+            qDebug() << "Operator * defined";
+            return diff;
+        }
+        else if (oper == "/")
+        {
+            expression = f1 + "/" + f2;
+            diff = "(" + SimplifyMult(df1, f2) + "-" + SimplifyMult(f1, df2) + ")/(" + f2 + "^2)";
+            qDebug() << "Operator / defined";
+            return diff;
+        }
+        else if (oper == "^")
+        {
+            expression = f1 + "^" + f2;
+            if (X::IsIt(f1) && Constant::IsIt(f2))
+            {
+                double exponent = f2.toDouble();
+                diff = QString::number(exponent) + "*" + f1 + "^" + QString::number(exponent - 1);
             }
             else
             {
-                continue;
+                diff = "Unsupported operation for derivatives";
             }
+            qDebug() << "Operator ^ defined";
+            return diff;
         }
         else
         {
-            qDebug() << "if is not ()";
-            f1 = localArguments[firstOperIndex - 2];
-            qDebug() << "f1 = " << f1;
-            df1 = computeSimpleDerivative(f1);
-            qDebug() << "df1 = " << df1;
-            f2 = localArguments[firstOperIndex - 1];
-            qDebug() << "f2 = " << f2;
-            df2 = computeSimpleDerivative(f2);
-            qDebug() << "df2 = " << df2;
-            oper = localArguments[firstOperIndex];
-            qDebug() << "oper = " << oper;
-            expression = f1 + oper + f2;
-            qDebug() << "expression = " << expression;
-            diff = computeSimpleDerivative(f1 + oper + f2);
-            qDebug() << "dif = " << diff;
-
-            localArguments.removeAt(firstOperIndex);
-            localArguments.removeAt(firstOperIndex - 1);
-            localArguments[firstOperIndex - 2] = expression;
-            qDebug() << "if is not () end";
+            diff = "Unsupported operation";
+            return diff;
         }
 
-        if (!diffsList.contains(expression))
-        {
+        // Удаление обработанных элементов и добавление результата
+        localArguments.removeAt(firstOperIndex + 1);
+        localArguments.removeAt(firstOperIndex);
+        localArguments[firstOperIndex - 1] = diff;
+
+        if (!diffsList.contains(expression)) {
             diffsList.insert(expression, diff);
         }
     }
 
     qDebug() << "Final localArguments:" << localArguments;
 
-    return localArguments.isEmpty() ? "Error computing derivative" : diffsList.value(localArguments.first(), "Error computing derivative");
+    return localArguments.isEmpty() ? "Error computing derivative" : localArguments.first();
 }
-
 
 QString Form::computeSimpleDerivative(const QString &func)
 {
